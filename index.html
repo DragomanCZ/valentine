@@ -123,10 +123,10 @@
 <body>
     <!-- Page 1: Initial Question -->
     <div class="page active-page" id="page1">
-        <h1>Will you be my valentine?</h1>
+        <h1>Budeš můj Valentýn Natálko?</h1>
         <div class="buttons">
-            <button id="yesBtn">YES</button>
-            <button id="noBtn">NO</button>
+            <button id="yesBtn">JOOO</button>
+            <button id="noBtn">NE</button>
         </div>
     </div>
 
@@ -148,7 +148,7 @@
             </div>
             <div class="option-card">
                 <img src="https://www.allrecipes.com/thmb/mvO1mRRH1zTz1SvbwBCTz78CRJI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/67700_RichPastaforthePoorKitchen_ddmfs_4x3_2284-220302ec8328442096df370dede357d7.jpg" alt="Pasta">
-                <label><input type="radio" name="food" value="Těstoviny"> Testoviny</label>
+                <label><input type="radio" name="food" value="Těstoviny"> Těstoviny</label>
             </div>
             <div class="option-card">
                 <img src="https://pizzaguru.cz/wp-content/uploads/2022/03/aurelien-lemasson-theobald-x00CzBt4Dfk-unsplash-1-500x500.jpg" alt="Pizza">
@@ -159,7 +159,7 @@
                 <label><input type="radio" name="food" value="Bowl"> Bowl</label>
             </div>
         </div>
-        <button class="continue-btn" onclick="nextPage('page3')">Continue</button>
+        <button class="continue-btn" onclick="nextPage('page3')">Vybrat</button>
     </div>
 
     <!-- Page 3: Svacina Selection -->
@@ -183,7 +183,7 @@
                 <label><input type="radio" name="svacina" value="Trdelník"> Trdelník</label>
             </div>
         </div>
-        <button class="continue-btn" onclick="nextPage('page4')">Continue</button>
+        <button class="continue-btn" onclick="nextPage('page4')">Vybrat</button>
     </div>
 
     <!-- Page 4: Aktivita Selection -->
@@ -215,24 +215,16 @@
                 <label><input type="radio" name="aktivita" value="Brusle"> Brusle</label>
             </div>
         </div>
-        <button class="continue-btn" onclick="nextPage('page5')">Continue</button>
+        <button class="continue-btn" onclick="nextPage('page5')">Vybrat</button>
     </div>
 
     <!-- Page 5: Final Message -->
     <div class="page" id="page5">
         <h1>Děkuju za to že jsi už 824 dní moje přítelkyně<br>Moc tě miluju</h1>
         <div class="gif-container">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3p0MmNzamlqYTNnNndzNTc3ZWhvOTA4cXJodHJzd3dmZTBpZTFjMCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/c76IJLufpNwSULPk77/giphy.gif" alt="Love animation">
+            <img src="https://media.giphy.com/media/26n6WywJyh39n1pBu/giphy.gif" alt="Love animation">
         </div>
     </div>
-
-
-
-
-
-
-
-
 
     <script>
         // Store selections
@@ -293,30 +285,61 @@
             });
         }
 
-        // Page navigation function
+    
         function nextPage(pageId) {
-            // Store selections
-            if (pageId === 'page3') selections.food = document.querySelector('input[name="food"]:checked')?.value;
-            if (pageId === 'page4') selections.svacina = document.querySelector('input[name="svacina"]:checked')?.value;
-            if (pageId === 'page5') selections.aktivita = document.querySelector('input[name="aktivita"]:checked')?.value;
+        // Store selections
+        if (pageId === 'page3') selections.food = document.querySelector('input[name="food"]:checked')?.value;
+        if (pageId === 'page4') selections.svacina = document.querySelector('input[name="svacina"]:checked')?.value;
+        if (pageId === 'page5') selections.aktivita = document.querySelector('input[name="aktivita"]:checked')?.value;
 
-            // Show final page and log selections
-            if (pageId === 'page5') {
-                console.log('Selected options:', selections);
-            }
+        // Submit form on final page
+        if (pageId === 'page5') {
+            // Populate hidden inputs
+            document.getElementById('form-food').value = selections.food;
+            document.getElementById('form-svacina').value = selections.svacina;
+            document.getElementById('form-aktivita').value = selections.aktivita;
 
-            // Switch pages
-            document.querySelector('.active-page').classList.remove('active-page');
-            document.getElementById(pageId).classList.add('active-page');
+            // Submit the form using fetch
+            const form = document.getElementById('formspree-form');
+            const formData = new FormData(form);
 
-            // Reinitialize click handlers for new page
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Form submitted successfully!');
+                } else {
+                    console.error('Form submission failed.');
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+            });
             setTimeout(setupImageClicks, 50);
         }
+
+        // Switch pages
+        document.querySelector('.active-page').classList.remove('active-page');
+        document.getElementById(pageId).classList.add('active-page');
+    }
 
         // Initial setup
         document.addEventListener('DOMContentLoaded', () => {
             setupImageClicks();
         });
     </script>
+
+
+<form id="formspree-form" action="https://formspree.io/f/xanqjyvl" method="POST" style="display: none;">
+    <input type="hidden" name="food" id="form-food">
+    <input type="hidden" name="svacina" id="form-svacina">
+    <input type="hidden" name="aktivita" id="form-aktivita">
+</form>
+
 </body>
 </html>
