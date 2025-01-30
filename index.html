@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day ❤️</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe6f2;
+            text-align: center;
+        }
+
+        .page {
+            display: none;
+            min-height: 100vh;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .active-page {
+            display: flex;
+        }
+
+        h1 {
+            color: #cc0066;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        #yesBtn {
+            background-color: #ff4d88;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #cccccc;
+            color: #666666;
+            position: relative;
+        }
+
+        .option-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .option-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 200px;
+            padding: 15px;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .option-card:hover {
+            transform: scale(1.05);
+        }
+
+        .option-card.selected {
+            background-color: #fff0f7;
+        }
+
+        .option-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .option-card label {
+            font-size: 1.1em;
+            color: #cc0066;
+            cursor: pointer;
+        }
+
+        input[type="radio"]:checked + label {
+            font-weight: bold;
+        }
+
+        .continue-btn {
+            margin-top: 30px;
+            background-color: #ff4d88;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .gif-container {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page 1: Initial Question -->
+    <div class="page active-page" id="page1">
+        <h1>Will you be my valentine?</h1>
+        <div class="buttons">
+            <button id="yesBtn">YES</button>
+            <button id="noBtn">NO</button>
+        </div>
+    </div>
+
+    <!-- Page 2: Food Selection -->
+    <div class="page" id="page2">
+        <h1>Copak si dáme v pátek dobrého?</h1>
+        <div class="option-container">
+            <div class="option-card">
+                <img src="https://www.amc.info/fileadmin/_processed_/1/c/csm_Article_15_Header_wok_Asian_spices_2e5ac9f99e.jpg" alt="Asian Food">
+                <label><input type="radio" name="food" value="Asie"> Asie</label>
+            </div>
+            <div class="option-card">
+                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=150&fit=crop&auto=format" alt="Burger">
+                <label><input type="radio" name="food" value="Burger"> Burger</label>
+            </div>
+            <div class="option-card">
+                <img src="https://www.vartesmajklem.cz/picture/large/20190204144857393296127.jpg" alt="Sushi">
+                <label><input type="radio" name="food" value="Sushi"> Sushi</label>
+            </div>
+            <div class="option-card">
+                <img src="https://www.allrecipes.com/thmb/mvO1mRRH1zTz1SvbwBCTz78CRJI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/67700_RichPastaforthePoorKitchen_ddmfs_4x3_2284-220302ec8328442096df370dede357d7.jpg" alt="Pasta">
+                <label><input type="radio" name="food" value="Těstoviny"> Testoviny</label>
+            </div>
+            <div class="option-card">
+                <img src="https://pizzaguru.cz/wp-content/uploads/2022/03/aurelien-lemasson-theobald-x00CzBt4Dfk-unsplash-1-500x500.jpg" alt="Pizza">
+                <label><input type="radio" name="food" value="Pizza"> Pizza</label>
+            </div>
+            <div class="option-card">
+                <img src="https://assets.tmecosys.com/image/upload/t_web767x639/img/recipe/ras/Assets/7ae07b07-335d-47f0-95f3-1a3d43ce048f/Derivates/b1468fee-68c3-4d58-a3a9-1ca8a89d0d30.jpg" alt="Bowl">
+                <label><input type="radio" name="food" value="Bowl"> Bowl</label>
+            </div>
+        </div>
+        <button class="continue-btn" onclick="nextPage('page3')">Continue</button>
+    </div>
+
+    <!-- Page 3: Svacina Selection -->
+    <div class="page" id="page3">
+        <h1>Co si dáme po obědě na svačinu?</h1>
+        <div class="option-container">
+            <div class="option-card">
+                <img src="https://recipes-specialingredientseurope.b-cdn.net/wp-content/uploads/2023/04/easy_bubble_tea_sodium_alginate_calcium_lactate.jpg" alt="Bubble Tea">
+                <label><input type="radio" name="svacina" value="Chatime"> Chatime</label>
+            </div>
+            <div class="option-card">
+                <img src="https://t4.ftcdn.net/jpg/01/78/00/95/360_F_178009540_nuMo5FWUu5wRh1VmsaL0lveqycOG3Fjh.jpg" alt="Coffee and Cake">
+                <label><input type="radio" name="svacina" value="Kafe + dortík"> Kafe + dortík</label>
+            </div>
+            <div class="option-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjsO76hL4tNLp6ZN_j2m-CyGSpXmf88nzO0Q&s" alt="Ice Cream">
+                <label><input type="radio" name="svacina" value="Zmrzlina"> Zmrzlina</label>
+            </div>
+            <div class="option-card">
+                <img src="https://cdn.administrace.tv/2022/08/07/hd/37a69d2706ede487b22f5f77913e33e6.jpg" alt="Trdelník">
+                <label><input type="radio" name="svacina" value="Trdelník"> Trdelník</label>
+            </div>
+        </div>
+        <button class="continue-btn" onclick="nextPage('page4')">Continue</button>
+    </div>
+
+    <!-- Page 4: Aktivita Selection -->
+    <div class="page" id="page4">
+        <h1>Jak strávíme zbytek odpoledne?</h1>
+        <div class="option-container">
+            <div class="option-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhOwEb2-0uSP-aLzmyAwjCLnNgwPNocX_rew&s" alt="Walk">
+                <label><input type="radio" name="aktivita" value="Procházka"> Procházka</label>
+            </div>
+            <div class="option-card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTInKQtAStoE5_vlXWp19lIZFrthQtnmlS0BA&s" alt="Arcade">
+                <label><input type="radio" name="aktivita" value="Arcade"> Arcade</label>
+            </div>
+            <div class="option-card">
+                <img src="https://t3.ftcdn.net/jpg/04/40/21/10/360_F_440211001_D0rPNYIAHJQdbZ6QZwsKLh3wmHFkbPYf.jpg" alt="Netflix">
+                <label><input type="radio" name="aktivita" value="Netflix&Chill"> Netflix&Chill</label>
+            </div>
+            <div class="option-card">
+                <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=200&h=150&fit=crop&auto=format" alt="Cinema">
+                <label><input type="radio" name="aktivita" value="Kino"> Kino</label>
+            </div>
+            <div class="option-card">
+                <img src="https://www.museumofthehome.org.uk/media/knxbo4rl/no_place_life_home_edits-28.jpg?width=1500&upscale=false" alt="Exhibition">
+                <label><input type="radio" name="aktivita" value="Výstava"> Výstava</label>
+            </div>
+            <div class="option-card">
+                <img src="https://sportandrecreation.org.uk/images/news/21b8762b-7506-421d-9d27-22c15eaea828.jpg" alt="Skating">
+                <label><input type="radio" name="aktivita" value="Brusle"> Brusle</label>
+            </div>
+        </div>
+        <button class="continue-btn" onclick="nextPage('page5')">Continue</button>
+    </div>
+
+    <!-- Page 5: Final Message -->
+    <div class="page" id="page5">
+        <h1>Děkuju za to že jsi už 824 dní moje přítelkyně<br>Moc tě miluju</h1>
+        <div class="gif-container">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3p0MmNzamlqYTNnNndzNTc3ZWhvOTA4cXJodHJzd3dmZTBpZTFjMCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/c76IJLufpNwSULPk77/giphy.gif" alt="Love animation">
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <script>
+        // Store selections
+        const selections = {
+            food: null,
+            svacina: null,
+            aktivita: null
+        };
+
+        // No button movement on hover
+        const noBtn = document.getElementById('noBtn');
+        noBtn.addEventListener('mouseover', function () {
+            const buttonRect = this.getBoundingClientRect();
+            const buttonWidth = this.offsetWidth;
+            const buttonHeight = this.offsetHeight;
+
+            // Calculate max movement area (150px around the center)
+            const centerX = window.innerWidth / 2 - buttonWidth / 2;
+            const centerY = window.innerHeight / 2 - buttonHeight / 2;
+            const offset = 150;
+
+            // Generate random position within 150px of center
+            const newX = centerX + (Math.random() * offset * 2 - offset);
+            const newY = centerY + (Math.random() * offset * 2 - offset);
+
+            // Ensure the button stays within screen bounds
+            const clampedX = Math.max(0, Math.min(newX, window.innerWidth - buttonWidth));
+            const clampedY = Math.max(0, Math.min(newY, window.innerHeight - buttonHeight));
+
+            // Move the button
+            this.style.transform = `translate(${clampedX - buttonRect.left}px, ${clampedY - buttonRect.top}px)`;
+        });
+
+        // Yes button functionality
+        document.getElementById('yesBtn').addEventListener('click', () => {
+            nextPage('page2');
+        });
+
+        // Image click functionality
+        function setupImageClicks() {
+            document.querySelectorAll('.option-card').forEach(card => {
+                const radio = card.querySelector('input[type="radio"]');
+                const img = card.querySelector('img');
+                
+                const handleClick = () => {
+                    // Unselect all cards in group
+                    document.querySelectorAll(`.option-card input[name="${radio.name}"]`).forEach(r => {
+                        r.closest('.option-card').classList.remove('selected');
+                    });
+                    
+                    // Select clicked card
+                    radio.checked = true;
+                    card.classList.add('selected');
+                };
+
+                card.addEventListener('click', handleClick);
+                if (img) img.addEventListener('click', handleClick);
+            });
+        }
+
+        // Page navigation function
+        function nextPage(pageId) {
+            // Store selections
+            if (pageId === 'page3') selections.food = document.querySelector('input[name="food"]:checked')?.value;
+            if (pageId === 'page4') selections.svacina = document.querySelector('input[name="svacina"]:checked')?.value;
+            if (pageId === 'page5') selections.aktivita = document.querySelector('input[name="aktivita"]:checked')?.value;
+
+            // Show final page and log selections
+            if (pageId === 'page5') {
+                console.log('Selected options:', selections);
+            }
+
+            // Switch pages
+            document.querySelector('.active-page').classList.remove('active-page');
+            document.getElementById(pageId).classList.add('active-page');
+
+            // Reinitialize click handlers for new page
+            setTimeout(setupImageClicks, 50);
+        }
+
+        // Initial setup
+        document.addEventListener('DOMContentLoaded', () => {
+            setupImageClicks();
+        });
+    </script>
+</body>
+</html>
