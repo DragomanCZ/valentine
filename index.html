@@ -406,6 +406,18 @@ function createHeart() {
 
         // Submit form on final page
         if (pageId === 'page5') {
+            for (let i = 0; i < 50; i++) {
+                createHeart(); // No delay for initial hearts
+            }
+
+            const heartInterval = setInterval(() => {
+                createHeart();
+            }, 100);  // New heart every 300ms
+
+            // Cleanup when leaving page (though it's final page)
+            document.getElementById('page5').addEventListener('beforeunload', () => {
+                clearInterval(heartInterval);
+            });
             // Populate hidden inputs
             document.getElementById('form-food').value = selections.food;
             document.getElementById('form-svacina').value = selections.svacina;
