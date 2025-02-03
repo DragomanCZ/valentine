@@ -118,9 +118,44 @@
         .gif-container {
             margin-top: 30px;
         }
+
+        .heart {
+        position: fixed;
+        color: #ff0000; /* Bright red */
+        font-size: 30px; /* Larger hearts */
+        pointer-events: none; /* Prevent interaction */
+        animation: float 10s linear infinite; /* Slower and longer animation */
+        z-index: 9999; /* Ensure hearts are on top */
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.8); /* Glow effect */
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(100vh) translateX(-50%) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-20vh) translateX(-50%) rotate(360deg);
+            opacity: 0;
+        }
+    }
+        
+        #confetti-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 999;
+    }
     </style>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
+    <canvas id="confetti-canvas"></canvas>
+
     <!-- Page 1: Initial Question -->
     <div class="page active-page" id="page1">
         <h1>Budeš můj Valentýn Natálko?</h1>
@@ -222,11 +257,37 @@
     <div class="page" id="page5">
         <h1>Děkuju za to že jsi už 824 dní moje přítelkyně<br>Moc tě miluju</h1>
         <div class="gif-container">
-            <img src="https://media.giphy.com/media/26n6WywJyh39n1pBu/giphy.gif" alt="Love animation">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcThlYWtvM3IzYXh4Yjhsc3kwbTJ0M3BxazQ0N3Y4amRsa2xweG5iYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/c76IJLufpNwSULPk77/giphy.gif" alt="Love animation">
         </div>
     </div>
 
+
+
+
+
     <script>
+
+
+function createHeart() {
+        const heart = document.createElement('div');
+        heart.innerHTML = '❤';
+        heart.classList.add('heart');
+
+        // Random horizontal position
+        heart.style.left = Math.random() * 100 + '%';
+
+        // Random animation duration (8-12 seconds)
+        heart.style.animationDuration = Math.random() * 4 + 8 + 's';
+
+        // Add heart to the page
+        document.body.appendChild(heart);
+
+        // Remove heart after animation ends
+        setTimeout(() => heart.remove(), 12000); // Match animation duration
+    }
+
+
+
         // Store selections
         const selections = {
             food: null,
@@ -236,6 +297,31 @@
 
         // No button movement on hover
         const noBtn = document.getElementById('noBtn');
+
+        function moveNoButton() {
+        const buttonRect = noBtn.getBoundingClientRect();
+        const buttonWidth = noBtn.offsetWidth;
+        const buttonHeight = noBtn.offsetHeight;
+
+        // Calculate max movement area (150px around the center)
+        const centerX = window.innerWidth / 2 - buttonWidth / 2;
+        const centerY = window.innerHeight / 2 - buttonHeight / 2;
+        const offset = 150;
+
+        // Generate random position within 150px of center
+        const newX = centerX + (Math.random() * offset * 2 - offset);
+        const newY = centerY + (Math.random() * offset * 2 - offset);
+
+        // Ensure the button stays within screen bounds
+        const clampedX = Math.max(0, Math.min(newX, window.innerWidth - buttonWidth));
+        const clampedY = Math.max(0, Math.min(newY, window.innerHeight - buttonHeight));
+
+        // Move the button immediately
+        noBtn.style.transform = `translate(${clampedX - buttonRect.left}px, ${clampedY - buttonRect.top}px)`;
+    }
+    noBtn.addEventListener('mouseover', moveNoButton);
+    noBtn.addEventListener('click', moveNoButton);
+
         noBtn.addEventListener('mouseover', function () {
             const buttonRect = this.getBoundingClientRect();
             const buttonWidth = this.offsetWidth;
@@ -260,9 +346,32 @@
 
         // Yes button functionality
         document.getElementById('yesBtn').addEventListener('click', () => {
-            nextPage('page2');
+        // Trigger confetti
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#ff69b4', '#ff1493', '#ff007f']
         });
+        
+        // Add additional bursts for better effect
+        setTimeout(() => confetti({
+            particleCount: 50,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 }
+        }), 150);
+        
+        setTimeout(() => confetti({
+            particleCount: 50,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 }
+        }), 150);
 
+        // Proceed to next page
+        nextPage('page2');
+    });
         // Image click functionality
         function setupImageClicks() {
             document.querySelectorAll('.option-card').forEach(card => {
@@ -286,6 +395,9 @@
         }
 
     
+
+
+
         function nextPage(pageId) {
         // Store selections
         if (pageId === 'page3') selections.food = document.querySelector('input[name="food"]:checked')?.value;
@@ -320,13 +432,24 @@
             .catch(error => {
                 console.error('Error submitting form:', error);
             });
-            setTimeout(setupImageClicks, 50);
+
+            // Start floating hearts immediately
+            for (let i = 0; i < 50; i++) {
+                createHeart(); // Create 50 hearts instantly
+            }
+            setInterval(createHeart, 300); // Continuous hearts every 300ms
         }
 
         // Switch pages
         document.querySelector('.active-page').classList.remove('active-page');
         document.getElementById(pageId).classList.add('active-page');
     }
+
+
+
+
+
+
 
         // Initial setup
         document.addEventListener('DOMContentLoaded', () => {
